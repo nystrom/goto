@@ -150,8 +150,9 @@ end
 
 function goto -d 'quickly navigate to aliased directories'
     if test (count $argv) -lt 1
-        __goto_usage
-        return 1
+        __goto_get_db > /dev/null
+        __goto_list_formatted
+        return $status
     end
     __goto_get_db > /dev/null
     switch $argv[1]
