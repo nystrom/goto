@@ -77,11 +77,13 @@ function __goto_directory
     set directory (__goto_find_directory $argv)
 
     if test $directory = ""
-        echo "Alias: '$argv' not found."
-        return 1
+        # If there's no alias, try to just `cd`.
+        set directory $argv
     end
 
     cd $directory
+    return $status
+end
 
 function __goto_list_formatted
     set len 0
