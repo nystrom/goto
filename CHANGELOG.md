@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2 - 17/03/23
+### Changed
+- Format output of `goto --list`
+- Default to `goto -list` when no arguments given.
+- Fallback on `cd` if alias not found.
+
 ## 1.1.1 - 16/02/20
 ### Changed
 - allow hyphens in aliases
