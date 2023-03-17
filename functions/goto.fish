@@ -82,9 +82,17 @@ function __goto_directory
     end
 
     cd $directory
-    if test $status -ne 0
-        echo "Failed to goto: '$directory'."
-        return 1
+
+function __goto_list_formatted
+    set len 0
+    for line in (__goto_list)
+        set acronym (string replace -r '\s.*' '' $line)
+        set len (math -s 0 max $len, (string length $acronym))
+    end
+    for line in (__goto_list)
+        set acronym (string replace -r '\s.*' '' $line)
+        set path (string replace -r '.*\s' '' $line)
+        echo (string pad -r -w $len $acronym) $path
     end
 end
 
@@ -118,10 +126,14 @@ function __goto_cleanup
     set tmp_db $HOME/.goto_tmp
     touch $tmp_db
     for line in (__goto_list)
-        if test -d (realpath (string replace -r '.*\s' '' $line))
+        set acronym (string replace -r '\s.*' '' $line)
+        set path (string replace -r '.*\s' '' $line)
+        if test -e $path
+            set path (realpath $path)
+        end
+        if test -d $path
             echo $line >> $tmp_db
         else
-            set acronym (string replace -r '.*\s' '' $line)
             echo "Removing: '$acronym'."
         end
     end
@@ -148,7 +160,7 @@ function goto -d 'quickly navigate to aliased directories'
         case -u or --unregister
             __goto_unregister $argv
         case -l or --list
-            __goto_list
+            __goto_list_formatted
         case -x or --expand
             __goto_expand $argv
         case -c or --cleanup
