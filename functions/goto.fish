@@ -65,9 +65,9 @@ digits, hyphens and underscores."
 
     echo -e $acronym\t(realpath $directory) >> (__goto_get_db)
     if test $status -eq 0
-        echo 'Alias successfully registered.'
+        echo 'Alias $acronym successfully registered.'
     else
-        echo 'Unable to register alias.'
+        echo 'Unable to register alias $acronym.'
         return 1
     end
 end
@@ -115,7 +115,7 @@ function __goto_unregister
     set tmp_db $HOME/.goto_tmp
     cat $db | string match -r "^(?!$acronym\s).+" > $tmp_db
     mv $tmp_db $db
-    echo 'Alias successfully unregistered.'
+    echo 'Alias $acronym successfully unregistered.'
 end
 
 function __goto_expand
