@@ -1,10 +1,11 @@
 # Changelog
 
-## 1.1.2 - 17/03/23
+## 1.2.0 - 12/04/23
 ### Changed
 - Format output of `goto --list`
 - Default to `goto -list` when no arguments given.
 - Fallback on `cd` if alias not found.
+- Unregister conflicting aliases when registering new ones rather than failing.
 
 ## 1.1.1 - 16/02/20
 ### Changed
