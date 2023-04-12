@@ -56,8 +56,11 @@ digits, hyphens and underscores."
     end
 
     if test (__goto_find_directory $acronym) != ''
-        echo "Alias already exists."
-        return 1
+        echo "Alias $acronym already exists."
+        __goto_unregister $acronym
+        if test $status -ne 0
+            return 1
+        end
     end
 
     echo -e $acronym\t(realpath $directory) >> (__goto_get_db)
