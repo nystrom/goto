@@ -102,7 +102,7 @@ function __goto_list_formatted
 end
 
 function __goto_list
-    cat (__goto_get_db) | string replace -r '\s' '\t' | sort
+    sort -u (__goto_get_db)
 end
 
 function __goto_unregister
