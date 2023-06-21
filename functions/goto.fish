@@ -73,7 +73,7 @@ digits, hyphens and underscores."
 end
 
 function __goto_find_directory
-    echo (cat (__goto_get_db) | string match -r "^$argv\s(.+)\$")[2]
+    echo (string match -r "^$argv\s(.+)\$" < (__goto_get_db))[2]
 end
 
 function __goto_directory
