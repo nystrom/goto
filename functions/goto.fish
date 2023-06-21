@@ -63,7 +63,7 @@ digits, hyphens and underscores."
         end
     end
 
-    echo -e $acronym\t(realpath $directory) >> (__goto_get_db)
+    echo -e $acronym\t(path resolve $directory) >> (__goto_get_db)
     if test $status -eq 0
         echo 'Alias $acronym successfully registered.'
     else
