@@ -73,7 +73,7 @@ digits, hyphens and underscores."
 end
 
 function __goto_find_directory
-    echo (__goto_get_db | string match -r "^$argv\s(.+)\$")[2]
+    echo (cat (__goto_get_db) | string match -r "^$argv\s(.+)\$")[2]
 end
 
 function __goto_directory
@@ -90,11 +90,12 @@ end
 
 function __goto_list
     set len 0
-    for line in (__goto_get_db)
+    set db (__goto_get_db)
+    for line in (cat $db)
         set acronym (string replace -r '\s.*' '' $line)
         set len (math -s 0 max $len, (string length $acronym))
     end
-    for line in (sort -u (__goto_get_db))
+    for line in (sort -u $db)
         set acronym (string replace -r '\s.*' '' $line)
         set path (string replace -r '.*\s' '' $line)
         echo (string pad -r -w $len $acronym) $path
@@ -109,7 +110,7 @@ function __goto_unregister
     set db (__goto_get_db)
     set acronym $argv[2]
     set tmp_db $HOME/.goto_tmp
-    cat $db | string match -r "^(?!$acronym\s).+" > $tmp_db
+    string match -r "^(?!$acronym\s).+" < $db > $tmp_db
     mv $tmp_db $db
     echo 'Alias $acronym successfully unregistered.'
 end
@@ -126,7 +127,7 @@ function __goto_cleanup
     set db (__goto_get_db)
     set tmp_db $HOME/.goto_tmp
     touch $tmp_db
-    for line in (__goto_get_db)
+    for line in (cat $db)
         set acronym (string replace -r '\s.*' '' $line)
         set path (string replace -r '.*\s' '' $line)
         if test -e $path
@@ -135,7 +136,7 @@ function __goto_cleanup
         if test -d $path
             echo $line >> $tmp_db
         else
-            echo "Removing: '$acronym'."
+            echo "Removing '$acronym'."
         end
     end
     mv $tmp_db $db
@@ -146,16 +147,15 @@ function ___goto_version
 end
 
 function __goto_find_aliases
-    __goto_get_db | string match -r '.+?\s'
+    string match -r '.+?\s' < (__goto_get_db)
 end
 
 function goto -d 'quickly navigate to aliased directories'
+    __goto_get_db > /dev/null
     if test (count $argv) -lt 1
-        __goto_get_db > /dev/null
         __goto_list
         return $status
     end
-    __goto_get_db > /dev/null
     switch $argv[1]
         case -r or --register
             __goto_register $argv
