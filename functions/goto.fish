@@ -73,7 +73,7 @@ digits, hyphens and underscores."
 end
 
 function __goto_find_directory
-    echo (__goto_list | string match -r "^$argv\s(.+)\$")[2]
+    echo (__goto_get_db | string match -r "^$argv\s(.+)\$")[2]
 end
 
 function __goto_directory
@@ -90,19 +90,15 @@ end
 
 function __goto_list_formatted
     set len 0
-    for line in (__goto_list)
+    for line in (__goto_get_db)
         set acronym (string replace -r '\s.*' '' $line)
         set len (math -s 0 max $len, (string length $acronym))
     end
-    for line in (__goto_list)
+    for line in (sort -u (__goto_get_db))
         set acronym (string replace -r '\s.*' '' $line)
         set path (string replace -r '.*\s' '' $line)
         echo (string pad -r -w $len $acronym) $path
     end
-end
-
-function __goto_list
-    sort -u (__goto_get_db)
 end
 
 function __goto_unregister
@@ -130,7 +126,7 @@ function __goto_cleanup
     set db (__goto_get_db)
     set tmp_db $HOME/.goto_tmp
     touch $tmp_db
-    for line in (__goto_list)
+    for line in (__goto_get_db)
         set acronym (string replace -r '\s.*' '' $line)
         set path (string replace -r '.*\s' '' $line)
         if test -e $path
@@ -150,7 +146,7 @@ function ___goto_version
 end
 
 function __goto_find_aliases
-    __goto_list | string match -r '.+?\s'
+    __goto_get_db | string match -r '.+?\s'
 end
 
 function goto -d 'quickly navigate to aliased directories'
