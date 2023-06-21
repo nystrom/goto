@@ -23,15 +23,15 @@ function __goto_usage
 end
 
 function __goto_get_db
-    if test -f "$GOTO_DB"
+    if set -q GOTO_DB; and test -f "$GOTO_DB"
         echo "$GOTO_DB"
-    else if test -d "$XDG_DATA_HOME"
-        mkdir -p "$XDG_DATA_HOME/goto"
-        touch -a "$XDG_DATA_HOME/goto/db"
+    else if set -q XDG_DATA_HOME; and test -d "$XDG_DATA_HOME"
+        test -d "$XDG_DATA_HOME/goto"; or mkdir -p "$XDG_DATA_HOME/goto"
+        test -f "$XDG_DATA_HOME/goto/db"; or touch -a "$XDG_DATA_HOME/goto/db"
         echo "$XDG_DATA_HOME/goto/db"
     else
-        mkdir -p "$HOME/.local/share/goto"
-        touch -a "$HOME/.local/share/goto/db"
+        test -d "$HOME/.local/share/goto"; or mkdir -p "$HOME/.local/share/goto"
+        test -f "$HOME/.local/share/goto/db"; or touch -a "$HOME/.local/share/goto/db"
         echo "$HOME/.local/share/goto/db"
     end
 end
