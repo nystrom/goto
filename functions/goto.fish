@@ -88,7 +88,7 @@ function __goto_directory
     return $status
 end
 
-function __goto_list_formatted
+function __goto_list
     set len 0
     for line in (__goto_get_db)
         set acronym (string replace -r '\s.*' '' $line)
@@ -152,7 +152,7 @@ end
 function goto -d 'quickly navigate to aliased directories'
     if test (count $argv) -lt 1
         __goto_get_db > /dev/null
-        __goto_list_formatted
+        __goto_list
         return $status
     end
     __goto_get_db > /dev/null
@@ -162,7 +162,7 @@ function goto -d 'quickly navigate to aliased directories'
         case -u or --unregister
             __goto_unregister $argv
         case -l or --list
-            __goto_list_formatted
+            __goto_list
         case -x or --expand
             __goto_expand $argv
         case -c or --cleanup
