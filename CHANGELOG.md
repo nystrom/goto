@@ -1,9 +1,15 @@
 # Changelog
 
+## 1.2.1 - 21/06/23
+### Changed
+- Performance improvements
+  - Avoid sorting db except for display
+  - Avoid forking unnecessarily, use fish builtins
+
 ## 1.2.0 - 12/04/23
 ### Changed
 - Format output of `goto --list`
-- Default to `goto -list` when no arguments given.
+- Default to `goto --list` when no arguments given.
 - Fallback on `cd` if alias not found.
 - Unregister conflicting aliases when registering new ones rather than failing.
 
