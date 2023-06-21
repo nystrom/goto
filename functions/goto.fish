@@ -134,7 +134,7 @@ function __goto_cleanup
         set acronym (string replace -r '\s.*' '' $line)
         set path (string replace -r '.*\s' '' $line)
         if test -e $path
-            set path (realpath $path)
+            set path (path resolve $path)
         end
         if test -d $path
             echo $line >> $tmp_db
