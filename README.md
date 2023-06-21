@@ -8,21 +8,29 @@ tab-completion
 
 ![demo](/demo.gif)
 
+This is a fork of `matusf/goto` with some usage and performance improvements.
+The main differences are:
+- Format output of `goto --list`
+- Default to `goto --list` when no arguments given.
+- Fallback on `cd` if alias not found.
+- Unregister conflicting aliases when registering new ones rather than failing.
+- Performance improvements.
+
 ## Installation
 
 ### Via [fisher](https://github.com/jorgebucaran/fisher)
 
 ```
-fisher install matusf/goto
+fisher install nystrom/goto
 ```
 
 ### Manually
 
-Simply copy the [goto.fish](https://raw.githubusercontent.com/matusf/goto/master/goto.fish)
+Simply copy the [goto.fish](https://raw.githubusercontent.com/nystrom/goto/master/goto.fish)
 to your `fish/functions` directory. (Typically `~/.config/fish/functions`) or run:
 
 ```
-curl --create-dirs -o ~/.config/fish/functions/goto.fish https://raw.githubusercontent.com/matusf/goto/master/functions/goto.fish
+curl --create-dirs -o ~/.config/fish/functions/goto.fish https://raw.githubusercontent.com/nystrom/goto/master/functions/goto.fish
 ```
 
 ## Usage
