@@ -139,7 +139,7 @@ function __goto_cleanup
             echo "Removing '$acronym'."
         end
     end
-    mv $tmp_db $db
+    sort -u $tmp_db > $db
 end
 
 function ___goto_version
