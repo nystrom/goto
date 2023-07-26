@@ -140,10 +140,11 @@ function __goto_cleanup
         end
     end
     sort -u $tmp_db > $db
+    rm -f $tmp_db
 end
 
 function ___goto_version
-    echo "1.2.1"
+    echo "1.2.2"
 end
 
 function __goto_find_aliases

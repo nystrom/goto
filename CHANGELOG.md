@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2 - 26/07/23
+### Changed
+- Remove temporary files
+
 ## 1.2.1 - 21/06/23
 ### Changed
 - Performance improvements
